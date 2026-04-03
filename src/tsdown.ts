@@ -74,7 +74,7 @@ export interface SolidLibOptions extends LibOptions {
   jsxOverride?: UserConfig
 }
 
-async function loadSolidPlugin(options?: Record<string, any>) {
+async function loadSolidPlugin(options?: Record<string, any>): Promise<any> {
   let solid: any
   try {
     // @ts-expect-error suppress type error

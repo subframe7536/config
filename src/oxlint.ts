@@ -82,13 +82,10 @@ export const baseConfig: OxlintConfig = {
 
 export const baseRules: OxlintConfig = {
   plugins: ['node', 'jsdoc', 'import', 'unicorn', 'oxc', 'typescript', 'eslint'],
-  jsPlugins: [{ name: 'subf', specifier: '@subf/oxlint-plugin' }],
   categories: {
     correctness: 'error',
   },
   rules: {
-    'subf/method-signature-style': ['error', 'property'],
-
     'array-callback-return': 'error',
     'block-scoped-var': 'error',
     'class-methods-use-this': 'error',
@@ -306,11 +303,14 @@ export const baseRules: OxlintConfig = {
   },
 }
 
-export const FILES_TS_TSX = ['**/*.?([cm])ts', '**/*.?([cm])tsx']
+export const FILES_TS_TSX: string[] = ['**/*.{ts,tsx}']
 export const ts: OxlintOverride = {
   files: FILES_TS_TSX,
   plugins: ['typescript'],
+  jsPlugins: [{ name: 'subf', specifier: '@subf/oxlint-plugin' }],
   rules: {
+    'subf/method-signature-style': ['error', 'property'],
+
     'constructor-super': 'off',
     'no-class-assign': 'off',
     'no-const-assign': 'off',
@@ -425,6 +425,8 @@ export const CONFIG: OxlintConfig = {
   ...baseRules,
   overrides,
 }
+
+export default CONFIG
 
 export const unocss: OxlintOverride = {
   files: FILES_TS_TSX,

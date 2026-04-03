@@ -14,11 +14,12 @@ bun i -D @subf/config
 
 ```json
 {
-	"extends": "@subf/config/tsc-lib",
+  "extends": "@subf/config/tsc-lib"
 }
 ```
 
 Available configs:
+
 - `tsc-lib`: for libraries.
 - `tsc-node`: for Node.js apps.
 - `tsc-web`: for SolidJS apps.
@@ -64,17 +65,17 @@ import { solidLib } from '@subf/config/tsdown'
 export default solidLib({ entry: 'src/index.tsx' })
 ```
 
-
 ### `oxfmt`
 
 In `oxfmt.config.ts`:
 
 ```ts
-import { config } from '@subf/config/oxfmt'
-export default config
+import { CONFIG } from '@subf/config/oxfmt'
+export default CONFIG
 ```
 
 #### Helper
+
 Use `subfFmt()` helper to create a config with opinionated presets for lib, solid, unocss, etc.
 
 ```ts
