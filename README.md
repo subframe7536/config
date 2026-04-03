@@ -1,6 +1,6 @@
 # @subf/config
 
-Universal configuration for TypeScript, SolidJS, oxlint, and oxfmt.
+Universal configuration for TypeScript, SolidJS, oxlint, oxfmt, and tsdown.
 
 ## Quick start
 

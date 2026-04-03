@@ -1,7 +1,20 @@
 {
   "name": "@subf/config",
   "version": "0.0.0",
-  "description": "Universal configuration for TypeScript, SolidJS, oxlint, oxfmt",
+  "description": "Universal configuration for TypeScript, SolidJS, oxlint, oxfmt, and tsdown.",
+  "keywords": [
+    "config",
+    "configuration",
+    "eslint",
+    "oxfmt",
+    "oxlint",
+    "prettier",
+    "shared config",
+    "solidjs",
+    "tsdown",
+    "typescript",
+    "universal config"
+  ],
   "homepage": "https://github.com/subframe7536/config#readme",
   "bugs": {
     "url": "https://github.com/subframe7536/config/issues"
@@ -21,9 +34,6 @@
     "bin"
   ],
   "type": "module",
-  "publishConfig": {
-    "access": "public"
-  },
   "exports": {
     "./oxfmt": "./dist/oxfmt.js",
     "./oxlint": "./dist/oxlint.js",
@@ -33,6 +43,9 @@
     "./tsconfig-node": "./tsconfig.node.json",
     "./tsconfig-web": "./tsconfig.web.json",
     "./tsconfig-lib": "./tsconfig.lib.json"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsdown",
