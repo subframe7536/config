@@ -122,6 +122,32 @@ export default subf({
 })
 ```
 
+## CLI
+
+Scaffold `tsconfig.json`, `oxlint.config.ts`, and `oxfmt.config.ts` into your project.
+
+### Quick start (no install)
+
+```sh
+bunx @subf/config          # recommended
+npx -y @subf/config        # fallback
+bunx @subf/config -f       # force overwrite existing files
+```
+
+After scaffolding you'll be prompted to install the package so your configs stay in sync with future updates:
+
+```sh
+bun i -D @subf/config
+```
+
+### Installed locally
+
+```sh
+bun i -D @subf/config
+bun subf                   # or just `subf` if on PATH
+bun subf -f                # force overwrite existing files
+```
+
 ## License
 
 MIT

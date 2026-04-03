@@ -12,11 +12,18 @@
     "type": "git",
     "url": "git+https://github.com/subframe7536/config.git"
   },
+  "bin": {
+    "subf": "./bin/subf.js"
+  },
   "files": [
     "dist",
-    "tsconfig.*.json"
+    "tsconfig.*.json",
+    "bin"
   ],
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     "./oxfmt": "./dist/oxfmt.js",
     "./oxlint": "./dist/oxlint.js",
@@ -32,9 +39,8 @@
     "dev": "tsdown --watch",
     "typecheck": "tsc --noEmit",
     "release": "bumpp --all",
-    "qa": "oxlint --fix && oxfmt",
-    "prepublishOnly": "bun run build",
-    "test": "node --test"
+    "qa": "bun run typecheck && oxlint --fix && oxfmt",
+    "prepublishOnly": "bun run build"
   },
   "dependencies": {
     "@subf/oxlint-plugin": "^0.1.0"
