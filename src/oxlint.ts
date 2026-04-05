@@ -1,4 +1,7 @@
+import { FILES_TS_TSX, solidConfig } from '@subf/oxlint-plugin/config'
 import type { OxlintConfig, OxlintOverride } from 'oxlint'
+
+export { FILES_TS_TSX, solidConfig as solid } from '@subf/oxlint-plugin/config'
 
 export const baseConfig: OxlintConfig = {
   env: {
@@ -303,7 +306,6 @@ export const baseRules: OxlintConfig = {
   },
 }
 
-export const FILES_TS_TSX: string[] = ['**/*.{ts,tsx}']
 export const ts: OxlintOverride = {
   files: FILES_TS_TSX,
   plugins: ['typescript'],
@@ -430,43 +432,10 @@ export default CONFIG
 
 export const unocss: OxlintOverride = {
   files: FILES_TS_TSX,
-  jsPlugins: [{ name: 'uno', specifier: '@unocss/eslint-plugin' }],
+  jsPlugins: [{ name: 'uno', specifier: '@subf/unocss/oxlint-plugin' }],
   rules: {
     'uno/order': ['warn', { unoFunctions: ['cn', 'cva'] }],
     'uno/blocklist': 'error',
-  },
-}
-
-export const solid: OxlintOverride = {
-  files: FILES_TS_TSX,
-  jsPlugins: ['eslint-plugin-solid'],
-  rules: {
-    'solid/event-handlers': [
-      'error',
-      {
-        // if true, don't warn on ambiguously named event handlers like `onclick` or `onchange`
-        ignoreCase: false,
-        // if true, warn when spreading event handlers onto JSX. Enable for Solid < v1.6.
-        warnOnSpread: false,
-      },
-    ],
-    // these rules are mostly style suggestions
-    'solid/imports': 'error',
-    // identifier usage is important
-    'solid/jsx-no-duplicate-props': 'error',
-    'solid/jsx-no-script-url': 'error',
-    'solid/no-destructure': 'error',
-    // security problems
-    'solid/no-innerhtml': ['error', { allowStatic: true }],
-    'solid/no-react-deps': 'error',
-    'solid/no-react-specific-props': 'error',
-    'solid/no-unknown-namespaces': 'error',
-    'solid/prefer-for': 'error',
-    'solid/prefer-show': 'error',
-    'solid/self-closing-comp': 'error',
-    'solid/style-prop': ['error', { styleProps: ['style', 'css'] }],
-    'solid/jsx-no-undef': ['error', { typescriptEnabled: true }],
-    'solid/reactivity': 'warn',
   },
 }
 
@@ -513,7 +482,7 @@ export function subfLint(options: SubfOpions = {}): OxlintConfig {
   }
 
   if (enableSolid) {
-    ovr.push(solid)
+    ovr.push(solidConfig)
   }
 
   ovr.push(...customOverrides)

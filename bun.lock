@@ -5,7 +5,7 @@
     "": {
       "name": "tsdown-starter",
       "dependencies": {
-        "@subf/oxlint-plugin": "^0.1.0",
+        "@subf/oxlint-plugin": "^0.2.0",
       },
       "devDependencies": {
         "@oxlint/plugins": "^1.58.0",
@@ -159,7 +159,7 @@
 
     "@rolldown/pluginutils": ["@rolldown/pluginutils@1.0.0-rc.12", "https://registry.npmmirror.com/@rolldown/pluginutils/-/pluginutils-1.0.0-rc.12.tgz", {}, "sha512-HHMwmarRKvoFsJorqYlFeFRzXZqCt2ETQlEDOb9aqssrnVBB1/+xgTGtuTrIk5vzLNX1MjMtTf7W9z3tsSbrxw=="],
 
-    "@subf/oxlint-plugin": ["@subf/oxlint-plugin@0.1.0", "https://registry.npmmirror.com/@subf/oxlint-plugin/-/oxlint-plugin-0.1.0.tgz", {}, "sha512-w46Of5HTYA9+Z1fWsdOvOoBhYVSRJOyWp7UFm3F/8zyufNTfaAQgpA8FHTD+AYAuIYLaEPT7k2aGmjy2U0R45A=="],
+    "@subf/oxlint-plugin": ["@subf/oxlint-plugin@0.2.0", "https://registry.npmmirror.com/@subf/oxlint-plugin/-/oxlint-plugin-0.2.0.tgz", {}, "sha512-h4wHNd32bi3BBVg4Y5U9DaeLuxZbO3b/lSSK31279OfS0AdTeo1z2AamqZ1US7AsN8XlOFh0xY6JaTQGWeKIHQ=="],
 
     "@tybys/wasm-util": ["@tybys/wasm-util@0.10.1", "https://registry.npmmirror.com/@tybys/wasm-util/-/wasm-util-0.10.1.tgz", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg=="],
 
