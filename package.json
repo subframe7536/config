@@ -1,7 +1,7 @@
 {
   "name": "@subf/config",
   "version": "0.1.1",
-  "description": "Universal configuration for TypeScript, SolidJS, oxlint, oxfmt, and tsdown.",
+  "description": "Universal configuration for TypeScript, oxlint (+unocss, +solid), oxfmt, and tsdown.",
   "keywords": [
     "config",
     "configuration",
