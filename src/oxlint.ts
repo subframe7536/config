@@ -1,4 +1,5 @@
 import { FILES_TS_TSX, solidConfig } from '@subf/oxlint-plugin/config'
+import { defu } from 'defu'
 import type { OxlintConfig, OxlintOverride } from 'oxlint'
 
 export { FILES_TS_TSX, solidConfig as solid } from '@subf/oxlint-plugin/config'
@@ -279,7 +280,7 @@ export const baseRules: OxlintConfig = {
     'unicorn/new-for-builtins': 'error',
     'unicorn/no-instanceof-builtins': 'error',
     'unicorn/no-instanceof-array': 'error',
-    'unicorn/no-new-array': 'allow',
+    'unicorn/no-new-array': 'off',
     'unicorn/no-new-buffer': 'error',
     'unicorn/number-literal-case': 'error',
     'unicorn/prefer-array-find': 'error',
@@ -443,7 +444,7 @@ export const unocss: OxlintOverride = {
   },
 }
 
-export interface SubfOpions extends OxlintConfig {
+export interface SubfOptions extends OxlintConfig {
   /**
    * Used for lib, force to explicit function return type
    */
@@ -452,14 +453,8 @@ export interface SubfOpions extends OxlintConfig {
   unocss?: boolean
 }
 
-export function subfLint(options: SubfOpions = {}): OxlintConfig {
-  const {
-    lib,
-    unocss: enableUnocss,
-    solid: enableSolid,
-    overrides: customOverrides = [],
-    ...oxlint
-  } = options
+export function subfLint(options: SubfOptions = {}): OxlintConfig {
+  const { lib, unocss: enableUnocss, solid: enableSolid, ...oxlint } = options
   const ovr = [vitest, markdownOverrideConfig]
 
   if (lib) {
@@ -489,12 +484,5 @@ export function subfLint(options: SubfOpions = {}): OxlintConfig {
     ovr.push(solidConfig)
   }
 
-  ovr.push(...customOverrides)
-
-  return {
-    ...baseConfig,
-    ...baseRules,
-    ...oxlint,
-    overrides: ovr,
-  }
+  return defu(oxlint, baseConfig, baseRules, { overrides: ovr })
 }
