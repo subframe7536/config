@@ -435,6 +435,8 @@ export const CONFIG: OxlintConfig = {
 
 export default CONFIG
 
+export type { OxlintConfig, OxlintOverride }
+
 export const unocss: OxlintOverride = {
   files: FILES_TS_TSX,
   jsPlugins: [{ name: 'uno', specifier: '@subf/unocss/oxlint-plugin' }],

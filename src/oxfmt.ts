@@ -19,6 +19,8 @@ export const CONFIG: OxfmtConfig = {
 
 export default CONFIG
 
+export type { OxfmtConfig }
+
 export function subfFmt(config?: OxfmtConfig): OxfmtConfig {
   return defu(CONFIG, config)
 }
