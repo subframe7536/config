@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 function createConfigs({ cwd = process.cwd(), force = false } = {}) {
   const files = [
@@ -41,6 +42,45 @@ function createConfigs({ cwd = process.cwd(), force = false } = {}) {
   return created
 }
 
+function getSelfVersionRange() {
+  try {
+    const currentDir = path.dirname(fileURLToPath(import.meta.url))
+    const selfPkgPath = path.resolve(currentDir, '..', 'package.json')
+    const selfPkg = JSON.parse(readFileSync(selfPkgPath, 'utf8'))
+
+    if (selfPkg && typeof selfPkg.version === 'string' && selfPkg.version.length > 0) {
+      return `^${selfPkg.version}`
+    }
+  } catch {}
+
+  return 'latest'
+}
+
+function sortObjectKeys(obj) {
+  return Object.fromEntries(Object.entries(obj).sort(([a], [b]) => a.localeCompare(b)))
+}
+
+function ensureDevDependency(pkg, name, versionRange) {
+  const existingDev = pkg.devDependencies && pkg.devDependencies[name]
+  if (existingDev) {
+    return { changed: false, location: 'devDependencies', version: existingDev }
+  }
+
+  const existingDep = pkg.dependencies && pkg.dependencies[name]
+  if (existingDep) {
+    return { changed: false, location: 'dependencies', version: existingDep }
+  }
+
+  if (!pkg.devDependencies || typeof pkg.devDependencies !== 'object') {
+    pkg.devDependencies = {}
+  }
+
+  pkg.devDependencies[name] = versionRange
+  pkg.devDependencies = sortObjectKeys(pkg.devDependencies)
+
+  return { changed: true, location: 'devDependencies', version: versionRange }
+}
+
 const projectRoot = process.env.INIT_CWD || process.cwd()
 const args = new Set(process.argv.slice(2))
 const force = args.has('--force') || args.has('-f')
@@ -65,9 +105,7 @@ try {
 const projectPkgPath = path.join(projectRoot, 'package.json')
 if (!existsSync(projectPkgPath)) {
   console.log('No package.json found in project root.')
-  console.log('To keep these configs in sync, install @subf/config as a devDependency:')
-  console.log('  bun i -D @subf/config')
-  console.log('  npm i -D @subf/config')
+  console.log('Skipping dependency injection because package.json is missing.')
   process.exit(0)
 }
 
@@ -76,24 +114,31 @@ try {
   projectPkg = JSON.parse(readFileSync(projectPkgPath, 'utf8'))
 } catch (err) {
   console.log(
-    'Created helper configs. Could not read package.json to suggest install command.',
+    'Created helper configs. Could not read package.json to add @subf/config.',
     err && (err.message || err),
   )
   process.exit(0)
 }
 
-const hasDep =
-  (projectPkg.devDependencies && projectPkg.devDependencies['@subf/config']) ||
-  (projectPkg.dependencies && projectPkg.dependencies['@subf/config'])
+const depName = '@subf/config'
+const depVersion = getSelfVersionRange()
+const depResult = ensureDevDependency(projectPkg, depName, depVersion)
 
-if (hasDep) {
-  console.log('Helper configs created. @subf/config is present in package.json.')
+if (depResult.changed) {
+  try {
+    writeFileSync(projectPkgPath, `${JSON.stringify(projectPkg, null, 2)}\n`, 'utf8')
+    console.log(`Added ${depName}@${depResult.version} to devDependencies in package.json.`)
+  } catch (err) {
+    console.log(
+      `Created helper configs, but failed to write ${depName} into package.json.`,
+      err && (err.message || err),
+    )
+    process.exit(0)
+  }
 } else {
   console.log(
-    'Helper configs created. To keep them in sync, install @subf/config as a devDependency:',
+    `${depName} already exists in ${depResult.location} (${depResult.version}). No dependency changes needed.`,
   )
-  console.log('  bun i -D @subf/config')
-  console.log('  npm i -D @subf/config')
 }
 
 process.exit(0)

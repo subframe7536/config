@@ -76,7 +76,7 @@ export default CONFIG
 
 #### Helper
 
-Use `subfFmt()` helper to create a config with opinionated presets for lib, solid, unocss, etc.
+Use `subfFmt()` helper to create a `oxfmt` config.
 
 ```ts
 import { subfFmt } from '@subf/config/oxfmt'
@@ -109,7 +109,7 @@ export default defineConfig({
 
 #### Helper
 
-Use `subf()` helper to create a config with opinionated presets for lib, solid, unocss, etc.
+Use `subf()` helper to create a `oxlint` config with opinionated presets for lib, solid, unocss, etc.
 
 ```ts
 import { subf } from '@subf/config/oxlint'
