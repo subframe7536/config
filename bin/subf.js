@@ -141,4 +141,31 @@ if (depResult.changed) {
   )
 }
 
+// If either oxfmt or oxlint aren't listed, hint how to install them
+try {
+  const missingTools = []
+  const hasOxfmt = projectPkg.devDependencies?.oxfmt || projectPkg.dependencies?.oxfmt
+  const hasOxlint = projectPkg.devDependencies?.oxlint || projectPkg.dependencies?.oxlint
+  const hasTypescript =
+    projectPkg.devDependencies?.typescript || projectPkg.dependencies?.typescript
+
+  if (!hasOxfmt) {
+    missingTools.push('oxfmt')
+  }
+  if (!hasOxlint) {
+    missingTools.push('oxlint')
+  }
+  if (!hasTypescript) {
+    missingTools.push('typescript')
+  }
+
+  if (missingTools.length > 0) {
+    console.log(
+      `Hint: Install ${missingTools.join(' and ')} to use the generated configs. Example: npm install -D ${missingTools.join(
+        ' ',
+      )}`,
+    )
+  }
+} catch {}
+
 process.exit(0)
