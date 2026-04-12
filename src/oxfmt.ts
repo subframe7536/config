@@ -1,3 +1,4 @@
+import { defu } from 'defu'
 import type { OxfmtConfig } from 'oxfmt'
 
 export const CONFIG: OxfmtConfig = {
@@ -19,8 +20,5 @@ export const CONFIG: OxfmtConfig = {
 export default CONFIG
 
 export function subfFmt(config?: OxfmtConfig): OxfmtConfig {
-  return {
-    ...CONFIG,
-    ...config,
-  }
+  return defu(CONFIG, config)
 }
