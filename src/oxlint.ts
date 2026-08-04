@@ -139,7 +139,11 @@ export const baseRules: OxlintConfig = {
     'no-func-assign': 'error',
     'no-global-assign': 'error',
     'no-import-assign': 'error',
-    'no-inner-declarations': ['error', 'functions', 'disallow'],
+    'no-inner-declarations': [
+      'error',
+      'functions',
+      { blockScopedFunctions: 'disallow', namespaces: 'disallow' },
+    ],
     'no-irregular-whitespace': 'error',
     'no-iterator': 'error',
     'no-labels': [
