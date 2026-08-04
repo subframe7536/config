@@ -1,6 +1,18 @@
 import type { DepsConfig, ExportsOptions, TsdownInputOption, UserConfig } from 'tsdown'
 import { mergeConfig } from 'tsdown/config'
-interface LibOptions {
+
+interface DepsOptions {
+  /**
+   * tsdown's deps option, which controls which dependency to bundle.
+   */
+  bundled?: DepsConfig['alwaysBundle']
+  /**
+   * tsdown's deps option, which controls which dependency to exclude.
+   */
+  unbundled?: DepsConfig['neverBundle']
+}
+
+export interface LibOptions extends DepsOptions {
   /**
    * The entry point for the library.
    * - 'index' (default): Only include `src/index.ts`.
@@ -17,16 +29,21 @@ interface LibOptions {
    * @default true
    */
   extraExports?: ExportsOptions['customExports']
-  /**
-   * tsdown's deps option, which controls how dependencies are bundled / excluded.
-   */
-  bundled?: DepsConfig['alwaysBundle']
-  unbundled?: DepsConfig['neverBundle']
+  dts?: UserConfig['dts'] & DepsOptions
+  plugins?: UserConfig['plugins']
   overrides?: UserConfig
 }
 
 export function lib(options: LibOptions = {}): UserConfig {
-  const { entry = 'index', extraExports, bundled, unbundled, overrides = {} } = options
+  const {
+    entry = 'index',
+    extraExports,
+    bundled,
+    unbundled,
+    plugins,
+    dts = { oxc: true },
+    overrides = {},
+  } = options
   return mergeConfig(
     {
       entry:
@@ -37,11 +54,16 @@ export function lib(options: LibOptions = {}): UserConfig {
             : entry === 'all'
               ? 'src/**/*.ts'
               : entry,
-      dts: { oxc: true },
+      dts,
       platform: 'neutral',
+      plugins,
       deps: {
         alwaysBundle: bundled,
         neverBundle: unbundled,
+        dts: {
+          alwaysBundle: dts.bundled,
+          neverBundle: dts.unbundled,
+        },
       },
       exports: { customExports: extraExports },
     },
