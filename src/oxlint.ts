@@ -86,10 +86,15 @@ export const baseConfig: OxlintConfig = {
 
 export const baseRules: OxlintConfig = {
   plugins: ['node', 'jsdoc', 'import', 'unicorn', 'oxc', 'typescript', 'eslint'],
+  jsPlugins: [{ name: 'subf', specifier: '@subf/oxlint-plugin' }],
   categories: {
     correctness: 'error',
   },
   rules: {
+    'subf/method-signature-style': 'error',
+    'subf/no-negated-conjunction': 'error',
+    'subf/no-negated-disjunction': 'error',
+
     'array-callback-return': 'error',
     'block-scoped-var': 'error',
     'class-methods-use-this': 'error',
@@ -106,6 +111,7 @@ export const baseRules: OxlintConfig = {
         properties: true,
       },
     ],
+    'logical-assignment-operators': ['error', 'always'],
     'no-alert': 'error',
     'no-array-constructor': 'error',
     'no-async-promise-executor': 'error',
@@ -139,6 +145,7 @@ export const baseRules: OxlintConfig = {
     'no-func-assign': 'error',
     'no-global-assign': 'error',
     'no-import-assign': 'error',
+    'no-implied-eval': 'error',
     'no-inner-declarations': [
       'error',
       'functions',
@@ -221,6 +228,7 @@ export const baseRules: OxlintConfig = {
         variables: true,
       },
     ],
+    'no-useless-assignment': 'error',
     'no-useless-call': 'error',
     'no-useless-catch': 'error',
     'no-useless-computed-key': 'error',
@@ -245,6 +253,7 @@ export const baseRules: OxlintConfig = {
     'object-shorthand': ['error', 'always'],
     'prefer-exponentiation-operator': 'error',
     'prefer-rest-params': 'error',
+    'prefer-regex-literals': 'error',
     'prefer-spread': 'error',
     'prefer-template': 'error',
     'symbol-description': 'error',
@@ -286,6 +295,7 @@ export const baseRules: OxlintConfig = {
     'unicorn/no-instanceof-array': 'error',
     'unicorn/no-new-array': 'off',
     'unicorn/no-new-buffer': 'error',
+    'unicorn/no-array-fill-with-reference-type': 'error',
     'unicorn/prefer-array-find': 'error',
     'unicorn/prefer-array-flat-map': 'error',
     'unicorn/prefer-array-some': 'error',
@@ -302,6 +312,7 @@ export const baseRules: OxlintConfig = {
     'unicorn/throw-new-error': 'error',
     'import/consistent-type-specifier-style': 'error',
     'import/no-absolute-path': 'error',
+    'import/no-cycle': 'error',
     'import/no-duplicates': 'error',
     'import/no-self-import': 'error',
     'import/no-named-export': 'allow',
@@ -315,10 +326,7 @@ export const baseRules: OxlintConfig = {
 export const ts: OxlintOverride = {
   files: FILES_TS_TSX,
   plugins: ['typescript'],
-  jsPlugins: [{ name: 'subf', specifier: '@subf/oxlint-plugin' }],
   rules: {
-    'subf/method-signature-style': ['error', 'property'],
-
     'constructor-super': 'off',
     'no-class-assign': 'off',
     'no-const-assign': 'off',
@@ -361,6 +369,7 @@ export const ts: OxlintOverride = {
       },
     ],
     'typescript/dot-notation': 'error',
+    'typescript/method-signature-style': ['error', 'property'],
     'typescript/no-duplicate-enum-values': 'error',
     'typescript/no-extra-non-null-assertion': 'error',
     'typescript/no-misused-new': 'error',
@@ -412,6 +421,7 @@ export const vitest: OxlintOverride = {
     'vitest/no-import-node-test': 'error',
     'vitest/prefer-hooks-in-order': 'error',
     'vitest/prefer-lowercase-title': 'error',
+    'vitest/prefer-called-exactly-once-with': 'warn',
     'no-unused-expressions': 'off',
   },
 }
