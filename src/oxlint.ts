@@ -286,7 +286,6 @@ export const baseRules: OxlintConfig = {
     'unicorn/no-instanceof-array': 'error',
     'unicorn/no-new-array': 'off',
     'unicorn/no-new-buffer': 'error',
-    'unicorn/number-literal-case': 'error',
     'unicorn/prefer-array-find': 'error',
     'unicorn/prefer-array-flat-map': 'error',
     'unicorn/prefer-array-some': 'error',
