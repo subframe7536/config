@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "moduleResolution": "bundler",
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "lib": ["DOM", "ESNext", "DOM.Iterable"],

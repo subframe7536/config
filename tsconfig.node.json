@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "lib": ["ESNext"],
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "allowImportingTsExtensions": true
