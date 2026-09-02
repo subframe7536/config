@@ -1,4 +1,4 @@
-import type { DepsConfig, ExportsOptions, TsdownInputOption, UserConfig } from 'tsdown'
+import type { DepsConfig, ExportsOptions, TsdownInputOption, UserConfig, DtsOptions } from 'tsdown'
 import { mergeConfig } from 'tsdown/config'
 
 interface DepsOptions {
@@ -29,7 +29,7 @@ export interface LibOptions extends DepsOptions {
    * @default true
    */
   extraExports?: ExportsOptions['customExports']
-  dts?: UserConfig['dts'] & DepsOptions
+  dts?: DtsOptions & DepsOptions
   plugins?: UserConfig['plugins']
   overrides?: UserConfig
 }
