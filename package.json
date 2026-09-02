@@ -30,7 +30,6 @@
   },
   "files": [
     "dist",
-    "tsconfig.*.json",
     "bin"
   ],
   "type": "module",
@@ -38,11 +37,7 @@
     "./oxfmt": "./dist/oxfmt.js",
     "./oxlint": "./dist/oxlint.js",
     "./tsdown": "./dist/tsdown.js",
-    "./package.json": "./package.json",
-    "./tsconfig-base": "./tsconfig.base.json",
-    "./tsconfig-node": "./tsconfig.node.json",
-    "./tsconfig-web": "./tsconfig.web.json",
-    "./tsconfig-lib": "./tsconfig.lib.json"
+    "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public"
@@ -51,14 +46,17 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "typecheck": "tsc --noEmit",
+    "lint": "oxlint --fix",
+    "format": "oxfmt",
     "release": "bumpp --all",
-    "qa": "bun run typecheck && oxlint --fix && oxfmt",
-    "prepublishOnly": "bun run build"
+    "qa": "nub run lint && nub run format && nub run typecheck",
+    "prepublishOnly": "nub run build"
   },
   "dependencies": {
     "@subf/oxlint-plugin": "^0.3.0"
   },
   "devDependencies": {
+    "@types/node": "^24",
     "bumpp": "^11.1.0",
     "oxfmt": "^0.65.0",
     "oxlint": "^1.80.0",

@@ -2,3 +2,7 @@ node_modules
 dist
 *.log
 .DS_Store
+tsconfig.base.json
+tsconfig.node.json
+tsconfig.web.json
+tsconfig.lib.json

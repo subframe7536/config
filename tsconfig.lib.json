@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig.node.json",
-  "compilerOptions": {
-    "noUncheckedIndexedAccess": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true
-  }
-}

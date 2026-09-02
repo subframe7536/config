@@ -15,6 +15,9 @@ importers:
         specifier: 6.1.7
         version: 6.1.7
     devDependencies:
+      '@types/node':
+        specifier: ^24
+        version: 24.13.3
       bumpp:
         specifier: ^11.1.0
         version: 11.1.0
@@ -384,6 +387,9 @@ packages:
 
   '@subf/oxlint-plugin@0.3.0':
     resolution: {integrity: sha512-4pzxdeDxY1O03loTqK98bLzOW9ltK3Ex+jKFctNZtB9P7Mg/dSBN+nejSkiTNax24sEaJBrF6oUzXRv2Ra3JDg==}
+
+  '@types/node@24.13.3':
+    resolution: {integrity: sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==}
 
   '@typescript/typescript-aix-ppc64@7.0.2':
     resolution: {integrity: sha512-MTKKkWB7p/0E9xi1d1tHtZ5PiLkGEMIq88pK2CubZjOsLtYTLqhgIgi6zepFa+9GHZ6h05NMCkQxGKiPXMxXtQ==}
@@ -832,6 +838,9 @@ packages:
   unconfig@7.5.0:
     resolution: {integrity: sha512-oi8Qy2JV4D3UQ0PsopR28CzdQ3S/5A1zwsUwp/rosSbfhJ5z7b90bIyTwi/F7hCLD4SGcZVjDzd4XoUQcEanvA==}
 
+  undici-types@7.18.2:
+    resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
+
   verkit@0.3.2:
     resolution: {integrity: sha512-zj/ob3UsvJGN0whEAKFp53REA5X66hvffVqoCtVQAakJKnKlH+/PcOfMoFwIG/o4rElqLv/ycAFlx8ZlXUorCg==}
     engines: {node: '>=18.12.0'}
@@ -1020,6 +1029,10 @@ snapshots:
   '@rolldown/pluginutils@1.0.1': {}
 
   '@subf/oxlint-plugin@0.3.0': {}
+
+  '@types/node@24.13.3':
+    dependencies:
+      undici-types: 7.18.2
 
   '@typescript/typescript-aix-ppc64@7.0.2':
     optional: true
@@ -1357,6 +1370,8 @@ snapshots:
       jiti: 2.7.0
       quansync: 1.0.0
       unconfig-core: 7.5.0
+
+  undici-types@7.18.2: {}
 
   verkit@0.3.2: {}
 

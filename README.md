@@ -12,18 +12,15 @@ bun i -D @subf/config
 
 ### `tsconfig`
 
-```json
-{
-  "extends": "@subf/config/tsc-lib"
-}
+Run `subf` to generate a standalone `tsconfig.json` (the default type is `lib`):
+
+```sh
+subf
+subf --type node # Node.js apps
+subf --type web  # SolidJS apps
 ```
 
-Available configs:
-
-- `tsc-lib`: for libraries.
-- `tsc-node`: for Node.js apps.
-- `tsc-web`: for SolidJS apps.
-- `tsc-base`: base config for custom setups.
+The generated file contains all compiler options directly and does not use `extends`. Use `--force` to overwrite an existing `tsconfig.json`.
 
 ### `tsdown`
 
@@ -147,6 +144,8 @@ bun i -D @subf/config
 bun subf                   # or just `subf` if on PATH
 bun subf -f                # force overwrite existing files
 ```
+
+When `oxlint` or `oxfmt` is missing, `subf` resolves the latest version from the registry and adds it to `devDependencies` (using `npm_config_registry`, then `NPM_CONFIG_REGISTRY`, then the public npm registry). Registry failures are reported as warnings and do not prevent config generation.
 
 ## License
 
