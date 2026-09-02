@@ -88,6 +88,7 @@ const help = args.has('--help') || args.has('-h')
 
 if (help) {
   console.log('Usage: subf [-f|--force]')
+  console.log('')
   console.log('Create helper config files in the current project:')
   console.log('  oxfmt.config.ts, oxlint.config.ts, tsconfig.json')
   console.log('Use -f or --force to overwrite existing files.')
