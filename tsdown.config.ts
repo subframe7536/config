@@ -1,4 +1,4 @@
-import { lib } from './src/tsdown'
+import { lib } from './src/tsdown.ts'
 
 export default lib({
   entry: 'shallow',
