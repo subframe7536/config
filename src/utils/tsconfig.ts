@@ -1,50 +1,55 @@
-export const BASE_COMPILER_OPTIONS: Record<string, unknown> = {
+export const TSCONFIG_TYPE = ['node', 'lib', 'solid', 'solid-lib'] as const
+export type TsconfigType = (typeof TSCONFIG_TYPE)[number]
+
+const BASE_COMPILER_OPTIONS: Record<string, unknown> = {
   target: 'esnext',
   module: 'esnext',
-  lib: ['ESNext'],
-  resolveJsonModule: true,
+  moduleResolution: 'Bundler',
+  moduleDetection: 'force',
   strict: true,
   strictNullChecks: true,
   noUnusedLocals: true,
   noImplicitOverride: true,
   esModuleInterop: true,
   isolatedModules: true,
-  verbatimModuleSyntax: true,
+
   skipLibCheck: true,
-  declaration: true,
-  sourceMap: true,
+  verbatimModuleSyntax: true,
+  resolveJsonModule: true,
+
   noEmit: true,
   allowImportingTsExtensions: true,
 }
 
-export const TSCONFIG_TYPE = ['node', 'web', 'solid', 'solid-lib']
-
-export type TsconfigType = (typeof TSCONFIG_TYPE)[number]
+function solidConfigs(options: Record<string, unknown>): void {
+  options.jsx = 'preserve'
+  options.jsxImportSource = 'solid-js'
+  options.lib = ['ES2022', 'DOM', 'DOM.Iterable']
+  options.types = ['vite/client']
+}
 
 export function getCompilerOptions(type: TsconfigType): Record<string, unknown> {
   const options = { ...BASE_COMPILER_OPTIONS }
   switch (type) {
     case 'solid':
-      options.jsx = 'preserve'
-      options.jsxImportSource = 'solid-js'
-      options.lib = ['DOM', 'ESNext', 'DOM.Iterable']
-      options.types = ['vite/client']
+      solidConfigs(options)
       break
     case 'solid-lib':
-      options.jsx = 'preserve'
-      options.jsxImportSource = 'solid-js'
-      options.lib = ['DOM', 'ESNext', 'DOM.Iterable']
-      options.types = ['vite/client']
+      solidConfigs(options)
       options.noUncheckedIndexedAccess = true
-      options.strictFunctionTypes = true
       break
     case 'node':
-      options.module = 'nodenext'
-      options.moduleResolution = 'nodenext'
+      options.target = 'ES2023'
+      options.lib = ['ES2023']
+      options.module = 'NodeNext'
+      options.moduleResolution = 'NodeNext'
+      options.types = ['node']
+      options.erasableSyntaxOnly = true
       break
     case 'lib':
+      options.target = 'ES2023'
+      options.lib = ['ES2023']
       options.noUncheckedIndexedAccess = true
-      options.strictFunctionTypes = true
       break
     default:
       break

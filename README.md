@@ -12,7 +12,7 @@ bun i -D @subf/config
 
 ### `tsconfig`
 
-Run `subf` to generate a standalone `tsconfig.json` (the default type is `lib`):
+Run `subf` to create or update `tsconfig.json` (the default type is `lib`):
 
 ```sh
 subf
@@ -20,7 +20,7 @@ subf --type node # Node.js apps
 subf --type web  # SolidJS apps
 ```
 
-The generated file contains all compiler options directly and does not use `extends`. Use `--force` to overwrite an existing `tsconfig.json`.
+When `tsconfig.json` already exists, missing settings are added while existing settings are preserved. Use `--force` to overwrite generated settings. Legacy `@subf/config` entries in `extends` are removed automatically.
 
 ### `tsdown`
 
@@ -145,7 +145,7 @@ bun subf                   # or just `subf` if on PATH
 bun subf -f                # force overwrite existing files
 ```
 
-When `oxlint` or `oxfmt` is missing, `subf` resolves the latest version from the registry and adds it to `devDependencies` (using `npm_config_registry`, then `NPM_CONFIG_REGISTRY`, then the public npm registry). Registry failures are reported as warnings and do not prevent config generation.
+When `oxlint` or `oxfmt` is missing, `subf` resolves the latest version from the registry and adds it to `devDependencies` (fallback chain: `$npm_config_registry` -> `$NPM_CONFIG_REGISTRY` -> the public npm registry). Registry failures are reported as warnings and do not prevent config generation.
 
 ## License
 

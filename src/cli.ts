@@ -11,7 +11,7 @@ export function parseType(argv: readonly string[]): TsconfigType {
   }
   const option = argv[index] ?? ''
   const value = option.startsWith('--type=') ? option.slice(7) : argv[index + 1]
-  if (!TSCONFIG_TYPE.includes(value || '')) {
+  if (!TSCONFIG_TYPE.some((item) => item === value)) {
     throw new Error(`Invalid type: ${value}. Must be one of ${TSCONFIG_TYPE.join(',')}.`)
   }
   return value as TsconfigType
@@ -28,7 +28,9 @@ export async function main(argv: readonly string[] = process.argv.slice(2)): Pro
     console.log('Usage: subf [--type lib|node|web] [-f|--force]')
     console.log('')
     console.log('Create oxfmt.config.ts, oxlint.config.ts, and tsconfig.json.')
-    console.log('The tsconfig type defaults to lib. Use --force to overwrite existing files.')
+    console.log(
+      'The tsconfig type defaults to lib. Existing tsconfig.json is merged automatically; use --force to overwrite existing config keys.',
+    )
     return 0
   }
 
