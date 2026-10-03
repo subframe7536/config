@@ -20,6 +20,7 @@ jobs:
       - uses: pnpm/setup@v3
         with:
           runtime: node@24
+          cache: true
       - run: pnpm publish --provenance --no-git-checks
       - run: pnpx changelogithub
         env:
