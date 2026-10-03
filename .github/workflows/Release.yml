@@ -19,7 +19,7 @@ jobs:
 
       - uses: pnpm/setup@v3
         with:
-          runtime: node@${{ matrix.node }}
+          runtime: node@24
       - run: pnpm publish --provenance --no-git-checks
       - run: pnpx changelogithub
         env:
