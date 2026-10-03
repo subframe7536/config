@@ -472,7 +472,7 @@ export interface SubfOptions extends OxlintConfig {
 }
 
 export function subfLint(options: SubfOptions = {}): OxlintConfig {
-  const { lib, unocss: enableUnocss, solid: enableSolid, ...oxlint } = options
+  const { lib, unocss: enableUnocss, solid: enableSolid, overrides, ...oxlint } = options
   const ovr = [vitest, markdownOverrideConfig]
 
   if (lib) {
@@ -500,6 +500,10 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
 
   if (enableSolid) {
     ovr.push(solidConfig)
+  }
+
+  if (overrides) {
+    ovr.push(...overrides)
   }
 
   return defu(oxlint, baseConfig, baseRules, { overrides: ovr })
