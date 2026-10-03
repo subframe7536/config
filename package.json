@@ -34,9 +34,8 @@
   ],
   "type": "module",
   "exports": {
-    "./oxfmt": "./dist/oxfmt.js",
-    "./oxlint": "./dist/oxlint.js",
-    "./tsdown": "./dist/tsdown.js",
+    "./oxfmt": "./dist/oxfmt.mjs",
+    "./oxlint": "./dist/oxlint.mjs",
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -49,8 +48,8 @@
     "lint": "oxlint --fix",
     "format": "oxfmt",
     "release": "bumpp --all",
-    "qa": "nub run lint && nub run format && nub run typecheck",
-    "prepublishOnly": "nub run build"
+    "qa": "pnpm run lint && pnpm run format && pnpm run typecheck",
+    "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
     "@subf/oxlint-plugin": "^0.3.0"
@@ -58,13 +57,13 @@
   "devDependencies": {
     "@types/node": "^24",
     "bumpp": "^11.1.0",
-    "oxfmt": "^0.65.0",
-    "oxlint": "^1.80.0",
-    "tsdown": "^0.22.14",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.86.0",
+    "tsdown": "^0.23.0",
     "typescript": "^7.0.2"
   },
   "peerDependencies": {
-    "defu": "6.1.7",
+    "defu": "^6.1.7",
     "oxfmt": "^0",
     "oxlint": "^1"
   }

@@ -13,16 +13,14 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - uses: nubjs/setup-nub@v0
+      - uses: pnpm/setup@v3
         with:
-          nub-version: 0.7.5
-
-      - run: nub ci
-      - run: nub publish --provenance --no-git-checks
-      - run: nubx changelogithub -y
+          runtime: node@${{ matrix.node }}
+      - run: pnpm publish --provenance --no-git-checks
+      - run: pnpx changelogithub -y
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
