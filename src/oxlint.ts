@@ -387,7 +387,10 @@ export const ts: OxlintOverride = {
     'typescript/prefer-literal-enum-member': 'error',
     'typescript/prefer-namespace-keyword': 'error',
     'typescript/prefer-ts-expect-error': 'error',
-    'typescript/switch-exhaustiveness-check': 'error',
+    'typescript/switch-exhaustiveness-check': [
+      'error',
+      { allowDefaultCaseForExhaustiveSwitch: true, considerDefaultExhaustiveForUnions: true },
+    ],
     'typescript/consistent-type-imports': [
       'error',
       {
