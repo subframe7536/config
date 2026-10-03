@@ -1,10 +1,12 @@
-import { lib } from './src/tsdown.ts'
+import { defineConfig } from 'tsdown'
 
-export default lib({
-  entry: 'shallow',
-  unbundled: ['tsdown', 'tsdown/config', /^node:/],
-  extraExports(exports) {
-    delete exports['./cli']
-    return exports
+export default defineConfig({
+  entry: 'src/*.ts',
+  deps: { neverBundle: ['tsdown', 'tsdown/config', /^node:/] },
+  exports: {
+    customExports(exports) {
+      delete exports['./cli']
+      return exports
+    },
   },
 })
