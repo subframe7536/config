@@ -11,6 +11,9 @@ export const baseConfig: OxlintConfig = {
     es2024: true,
     node: true,
   },
+  options: {
+    reportUnusedDisableDirectives: 'error',
+  },
   globals: {
     AudioWorkletGlobalScope: 'readonly',
     AudioWorkletProcessor: 'readonly',
@@ -85,7 +88,7 @@ export const baseConfig: OxlintConfig = {
 }
 
 export const baseRules: OxlintConfig = {
-  plugins: ['node', 'jsdoc', 'import', 'unicorn', 'oxc', 'typescript', 'eslint'],
+  plugins: ['node', 'jsdoc', 'import', 'unicorn', 'oxc', 'typescript', 'eslint', 'promise'],
   jsPlugins: [{ name: 'subf', specifier: '@subf/oxlint-plugin' }],
   categories: {
     correctness: 'error',
@@ -103,6 +106,8 @@ export const baseRules: OxlintConfig = {
     'default-case-last': 'error',
     'default-param-last': 'error',
     eqeqeq: ['error', 'smart'],
+    'for-direction': 'error',
+    'getter-return': 'error',
     'new-cap': [
       'error',
       {
@@ -121,6 +126,7 @@ export const baseRules: OxlintConfig = {
     'no-class-assign': 'error',
     'no-compare-neg-zero': 'error',
     'no-cond-assign': ['error', 'except-parens'],
+    'no-console': 'error',
     'no-const-assign': 'error',
     'no-control-regex': 'error',
     'no-debugger': 'error',
@@ -135,6 +141,7 @@ export const baseRules: OxlintConfig = {
       },
     ],
     'no-empty-pattern': 'error',
+    'no-empty-static-block': 'error',
     'no-eq-null': 'error',
     'no-eval': 'error',
     'no-ex-assign': 'error',
@@ -169,6 +176,7 @@ export const baseRules: OxlintConfig = {
     'no-new-native-nonconstructor': 'error',
     'no-new-wrappers': 'error',
     'no-obj-calls': 'error',
+    'no-promise-executor-return': 'error',
     'no-proto': 'error',
     'no-prototype-builtins': 'error',
     'no-redeclare': [
@@ -201,6 +209,7 @@ export const baseRules: OxlintConfig = {
     'no-template-curly-in-string': 'error',
     'no-this-before-super': 'error',
     'no-throw-literal': 'error',
+    'no-undef': 'error',
     'no-unexpected-multiline': 'error',
     'no-unmodified-loop-condition': 'error',
     'no-unneeded-ternary': [
@@ -220,6 +229,7 @@ export const baseRules: OxlintConfig = {
         allowTernary: true,
       },
     ],
+    'no-unused-private-class-members': 'error',
     'no-use-before-define': [
       'error',
       {
@@ -229,6 +239,7 @@ export const baseRules: OxlintConfig = {
       },
     ],
     'no-useless-assignment': 'error',
+    'no-useless-backreference': 'error',
     'no-useless-call': 'error',
     'no-useless-catch': 'error',
     'no-useless-computed-key': 'error',
@@ -236,11 +247,27 @@ export const baseRules: OxlintConfig = {
     'no-useless-rename': 'error',
     'no-useless-return': 'error',
     'no-var': 'error',
+    'no-warning-comments': [
+      'error',
+      {
+        terms: ['@nocommit'],
+      },
+    ],
     'no-with': 'error',
 
     'no-empty-character-class': 'error',
     'no-constructor-return': 'error',
-    'no-unused-vars': 'error',
+    'no-unused-vars': [
+      'error',
+      {
+        args: 'none',
+        fix: {
+          imports: 'safe-fix',
+          variables: 'off',
+        },
+        varsIgnorePattern: '^_',
+      },
+    ],
     'no-nonoctal-decimal-escape': 'error',
     'no-setter-return': 'error',
     'no-unused-labels': 'error',
@@ -251,11 +278,22 @@ export const baseRules: OxlintConfig = {
     'no-unsafe-optional-chaining': 'error',
 
     'object-shorthand': ['error', 'always'],
+    'prefer-arrow-callback': [
+      'error',
+      {
+        allowNamedFunctions: true,
+      },
+    ],
+    'prefer-const': 'error',
     'prefer-exponentiation-operator': 'error',
+    'prefer-object-has-own': 'error',
+    'prefer-promise-reject-errors': 'error',
     'prefer-rest-params': 'error',
     'prefer-regex-literals': 'error',
     'prefer-spread': 'error',
     'prefer-template': 'error',
+    'preserve-caught-error': 'error',
+    'require-yield': 'error',
     'symbol-description': 'error',
     'unicode-bom': ['error', 'never'],
     'use-isnan': [
@@ -277,6 +315,8 @@ export const baseRules: OxlintConfig = {
     'node/no-exports-assign': 'error',
     'node/no-new-require': 'error',
     'node/no-path-concat': 'error',
+    'promise/no-multiple-resolved': 'error',
+    'promise/no-return-in-finally': 'error',
     'jsdoc/check-access': 'warn',
     'jsdoc/check-property-names': 'warn',
     'jsdoc/empty-tags': 'warn',
@@ -287,39 +327,80 @@ export const baseRules: OxlintConfig = {
     'jsdoc/require-property-description': 'warn',
     'jsdoc/require-property-name': 'warn',
     'jsdoc/require-returns-description': 'warn',
+    'unicorn/catch-error-name': 'error',
     'unicorn/consistent-empty-array-spread': 'error',
+    'unicorn/consistent-function-scoping': 'error',
     'unicorn/error-message': 'error',
     'unicorn/escape-case': 'error',
     'unicorn/new-for-builtins': 'error',
+    'unicorn/no-abusive-eslint-disable': 'error',
+    'unicorn/no-hex-escape': 'error',
     'unicorn/no-instanceof-builtins': 'error',
     'unicorn/no-instanceof-array': 'error',
+    'unicorn/no-invalid-fetch-options': 'error',
+    'unicorn/no-invalid-remove-event-listener': 'error',
+    'unicorn/no-magic-array-flat-depth': 'error',
     'unicorn/no-new-array': 'off',
     'unicorn/no-new-buffer': 'error',
     'unicorn/no-array-fill-with-reference-type': 'error',
+    'unicorn/no-typeof-undefined': 'error',
+    'unicorn/no-unnecessary-slice-end': 'error',
+    'unicorn/no-useless-promise-resolve-reject': 'error',
+    'unicorn/no-useless-spread': 'error',
+    'unicorn/numeric-separators-style': 'error',
     'unicorn/prefer-array-find': 'error',
     'unicorn/prefer-array-flat-map': 'error',
+    'unicorn/prefer-array-index-of': 'error',
     'unicorn/prefer-array-some': 'error',
+    'unicorn/prefer-at': 'error',
     'unicorn/prefer-code-point': 'error',
     'unicorn/prefer-date-now': 'error',
+    'unicorn/prefer-dom-node-append': 'error',
     'unicorn/prefer-dom-node-text-content': 'error',
+    'unicorn/prefer-import-meta-properties': 'error',
     'unicorn/prefer-includes': 'error',
+    'unicorn/prefer-native-coercion-functions': 'error',
     'unicorn/prefer-node-protocol': 'error',
     'unicorn/prefer-number-properties': 'error',
-    'unicorn/prefer-string-starts-ends-with': 'error',
-    'unicorn/prefer-type-error': 'error',
+    'unicorn/prefer-optional-catch-binding': 'error',
     'unicorn/prefer-set-has': 'error',
+    'unicorn/prefer-set-size': 'error',
+    'unicorn/prefer-single-call': 'error',
+    'unicorn/prefer-string-raw': 'error',
+    'unicorn/prefer-string-replace-all': 'error',
+    'unicorn/prefer-string-slice': 'error',
+    'unicorn/prefer-string-starts-ends-with': 'error',
+    'unicorn/prefer-structured-clone': 'error',
+    'unicorn/prefer-top-level-await': 'error',
+    'unicorn/prefer-type-error': 'error',
     'unicorn/switch-case-braces': ['error', 'avoid'],
+    'unicorn/text-encoding-identifier-case': 'error',
     'unicorn/throw-new-error': 'error',
     'import/consistent-type-specifier-style': 'error',
+    'import/export': 'error',
     'import/no-absolute-path': 'error',
     'import/no-cycle': 'error',
     'import/no-duplicates': 'error',
+    'import/no-namespace': 'error',
     'import/no-self-import': 'error',
     'import/no-named-export': 'allow',
     'import/first': 'error',
-    'oxc/no-map-spread': 'error',
+    'oxc/approx-constant': 'error',
+    'oxc/bad-bitwise-operator': 'error',
+    'oxc/bad-char-at-comparison': 'error',
+    'oxc/bad-comparison-sequence': 'error',
+    'oxc/bad-min-max-func': 'error',
+    'oxc/bad-object-literal-comparison': 'error',
+    'oxc/bad-replace-all-arg': 'error',
+    'oxc/const-comparisons': 'error',
+    'oxc/double-comparisons': 'error',
     'oxc/misrefactored-assign-op': 'error',
+    'oxc/missing-throw': 'error',
+    'oxc/no-accumulating-spread': 'error',
+    'oxc/no-map-spread': 'error',
     'oxc/no-this-in-exported-function': 'error',
+    'oxc/number-arg-out-of-range': 'error',
+    'oxc/uninvoked-array-callback': 'error',
   },
 }
 
@@ -328,8 +409,10 @@ export const ts: OxlintOverride = {
   plugins: ['typescript'],
   rules: {
     'constructor-super': 'off',
+    'getter-return': 'off',
     'no-class-assign': 'off',
     'no-const-assign': 'off',
+    'no-dupe-class-members': 'off',
     'no-dupe-keys': 'off',
     'no-func-assign': 'off',
     'no-import-assign': 'off',
@@ -343,6 +426,8 @@ export const ts: OxlintOverride = {
     ],
     'no-setter-return': 'off',
     'no-this-before-super': 'off',
+    'no-undef': 'off',
+    'no-unreachable': 'off',
     'no-unsafe-negation': 'off',
     'no-with': 'off',
     'no-unused-expressions': [
@@ -362,6 +447,12 @@ export const ts: OxlintOverride = {
         variables: true,
       },
     ],
+    'typescript/array-type': [
+      'error',
+      {
+        default: 'generic',
+      },
+    ],
     'typescript/ban-ts-comment': [
       'error',
       {
@@ -370,13 +461,18 @@ export const ts: OxlintOverride = {
     ],
     'typescript/dot-notation': 'error',
     'typescript/method-signature-style': ['error', 'property'],
+    'typescript/no-confusing-non-null-assertion': 'error',
     'typescript/no-duplicate-enum-values': 'error',
+    'typescript/no-empty-object-type': 'error',
+    'typescript/no-explicit-any': 'error',
     'typescript/no-extra-non-null-assertion': 'error',
     'typescript/no-misused-new': 'error',
     'typescript/no-non-null-asserted-nullish-coalescing': 'error',
     'typescript/no-non-null-asserted-optional-chain': 'error',
+    'typescript/no-non-null-assertion': 'error',
     'typescript/no-require-imports': 'error',
     'typescript/no-this-alias': 'error',
+    'typescript/no-unnecessary-parameter-property-assignment': 'error',
     'typescript/no-unnecessary-type-constraint': 'error',
     'typescript/no-unnecessary-type-conversion': 'error',
     'typescript/no-unnecessary-type-assertion': 'error',
@@ -400,6 +496,7 @@ export const ts: OxlintOverride = {
     ],
     'typescript/no-import-type-side-effects': 'error',
     'typescript/no-unnecessary-type-arguments': 'error',
+    'typescript/triple-slash-reference': 'error',
   },
 }
 
@@ -425,8 +522,69 @@ export const vitest: OxlintOverride = {
     'vitest/prefer-hooks-in-order': 'error',
     'vitest/prefer-lowercase-title': 'error',
     'vitest/prefer-called-exactly-once-with': 'warn',
+    'vitest/require-awaited-expect-poll': 'error',
     'no-unused-expressions': 'off',
+    'typescript/no-explicit-any': 'off',
+    'typescript/no-non-null-assertion': 'off',
   },
+}
+
+export const typeAware: OxlintConfig = {
+  options: {
+    typeAware: true,
+  },
+  rules: {
+    'typescript/await-thenable': ['error', { allowMixedPromiseArrays: true }],
+    'typescript/no-array-delete': 'error',
+    'typescript/no-duplicate-type-constituents': 'error',
+    'typescript/no-floating-promises': 'error',
+    'typescript/no-for-in-array': 'error',
+    'typescript/no-misused-promises': 'error',
+    'typescript/no-misused-spread': 'error',
+    'typescript/no-unsafe-argument': 'error',
+    'typescript/no-unsafe-assignment': 'error',
+    'typescript/no-unsafe-call': 'error',
+    'typescript/no-unsafe-member-access': 'error',
+    'typescript/no-unsafe-return': 'error',
+    'typescript/no-unsafe-type-assertion': 'error',
+    'typescript/no-unsafe-unary-minus': 'error',
+    'typescript/require-array-sort-compare': 'error',
+    'typescript/return-await': ['error', 'error-handling-correctness-only'],
+    'typescript/unbound-method': 'error',
+    'typescript/use-unknown-in-catch-callback-variable': 'error',
+  },
+  overrides: [
+    {
+      files: FILES_TS_TSX,
+      rules: {
+        'no-throw-literal': 'off',
+        'typescript/only-throw-error': 'error',
+      },
+    },
+    {
+      files: [
+        '**/*.{test,spec,integration,e2e}.{ts,tsx,mts,cts}',
+        '**/__tests__/**/*.{ts,tsx,mts,cts}',
+      ],
+      rules: {
+        'typescript/no-unsafe-argument': 'off',
+        'typescript/no-unsafe-assignment': 'off',
+        'typescript/no-unsafe-member-access': 'off',
+        'typescript/only-throw-error': 'off',
+        'typescript/unbound-method': 'off',
+      },
+    },
+    {
+      files: ['**/*.{js,jsx,mjs,cjs}'],
+      rules: {
+        'typescript/no-unsafe-argument': 'off',
+        'typescript/no-unsafe-assignment': 'off',
+        'typescript/no-unsafe-call': 'off',
+        'typescript/no-unsafe-member-access': 'off',
+        'typescript/no-unsafe-return': 'off',
+      },
+    },
+  ],
 }
 
 export const markdownOverrideConfig: OxlintOverride = {
@@ -468,12 +626,20 @@ export interface SubfOptions extends OxlintConfig {
    */
   lib?: boolean
   solid?: boolean
+  typeAware?: boolean
   unocss?: boolean
 }
 
 export function subfLint(options: SubfOptions = {}): OxlintConfig {
-  const { lib, unocss: enableUnocss, solid: enableSolid, overrides, ...oxlint } = options
-  const ovr = [vitest, markdownOverrideConfig]
+  const {
+    lib,
+    unocss: enableUnocss,
+    solid: enableSolid,
+    typeAware: enableTypeAware,
+    overrides,
+    ...oxlint
+  } = options
+  const ovr: OxlintOverride[] = []
 
   if (lib) {
     ovr.push({
@@ -494,6 +660,8 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
     ovr.push(ts)
   }
 
+  ovr.push(vitest, markdownOverrideConfig)
+
   if (enableUnocss) {
     ovr.push(unocss)
   }
@@ -502,9 +670,19 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
     ovr.push(solidConfig)
   }
 
+  if (enableTypeAware && typeAware.overrides) {
+    ovr.push(...typeAware.overrides)
+  }
+
   if (overrides) {
     ovr.push(...overrides)
   }
 
-  return defu(oxlint, baseConfig, baseRules, { overrides: ovr })
+  return defu(
+    oxlint,
+    enableTypeAware ? { options: typeAware.options, rules: typeAware.rules } : {},
+    baseConfig,
+    baseRules,
+    { overrides: ovr },
+  )
 }
