@@ -52,14 +52,14 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@subf/oxlint-plugin": "^0.3.0"
+    "@subf/oxlint-plugin": "^0.4.0"
   },
   "devDependencies": {
     "@types/node": "^24",
     "bumpp": "^11.1.0",
-    "oxfmt": "^0.71.0",
-    "oxlint": "^1.86.0",
-    "tsdown": "^0.23.0",
+    "oxfmt": "^0.79.0",
+    "oxlint": "^1.94.0",
+    "tsdown": "^0.23.7",
     "typescript": "^7.0.2"
   },
   "peerDependencies": {
