@@ -653,7 +653,7 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
     ...oxlint
   } = options
   const ovr: Array<OxlintOverride> = []
-  let solidExtra: OxlintConfig = {}
+  let solidSettings: OxlintConfig['settings']
 
   if (lib) {
     ovr.push({
@@ -689,9 +689,7 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
       if (preset.overrides) {
         ovr.push(...preset.overrides)
       }
-      if (preset.settings) {
-        solidExtra = { settings: preset.settings }
-      }
+      solidSettings = preset.settings
     }
   }
 
@@ -703,24 +701,33 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
     ovr.push(...overrides)
   }
 
-  // `env` and `globals` are not merged from `extends` configs, so they are
-  // merged manually at the top level. Everything else (`rules`, `plugins`,
-  // `categories`, `ignorePatterns`, `overrides`, ...) is left to `extends`.
+  // `env`, `globals`, `settings` and `ignorePatterns` are dropped by `extends`,
+  // and a `plugins` array replaces the ones in `extends` configs instead of
+  // merging, so they are merged manually. `rules`, `categories`, `jsPlugins`,
+  // `options` and `overrides` are left to `extends`.
   return {
     ...oxlint,
     env: { ...baseConfig.env, ...oxlint.env },
     globals: { ...baseConfig.globals, ...oxlint.globals },
+    settings: { ...solidSettings, ...oxlint.settings },
     options: {
       ...baseConfig.options,
       ...(enableTypeAware ? typeAware.options : {}),
       ...oxlint.options,
     },
-    settings: { ...solidExtra.settings, ...oxlint.settings },
+    plugins: [
+      ...(baseRules.plugins ?? []),
+      ...(userExtends ?? []).flatMap((config) => config.plugins ?? []),
+      ...(oxlint.plugins ?? []),
+    ],
+    ignorePatterns: [
+      ...(baseConfig.ignorePatterns ?? []),
+      ...(userExtends ?? []).flatMap((config) => config.ignorePatterns ?? []),
+      ...(oxlint.ignorePatterns ?? []),
+    ],
     extends: [
-      baseConfig,
       baseRules,
-      ...(enableTypeAware ? [{ options: typeAware.options, rules: typeAware.rules }] : []),
-      ...(solidExtra.settings ? [solidExtra] : []),
+      ...(enableTypeAware ? [{ rules: typeAware.rules }] : []),
       ...(userExtends ?? []),
     ],
     overrides: ovr,

@@ -1,2 +1,5 @@
 minimumReleaseAgeExclude:
   - '@subf/oxlint-plugin@0.4.0'
+
+publicHoistPattern:
+  - '*oxlint*'
