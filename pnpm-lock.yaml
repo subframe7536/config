@@ -167,8 +167,8 @@ importers:
   .:
     dependencies:
       '@subf/oxlint-plugin':
-        specifier: ^0.4.0
-        version: 0.4.0
+        specifier: ^0.4.1
+        version: 0.4.1
     devDependencies:
       '@types/node':
         specifier: ^24
@@ -561,8 +561,8 @@ packages:
   '@rolldown/pluginutils@1.1.1':
     resolution: {integrity: sha512-glFIJDvLNDtJhT9qrMFWLPbvS+skxgt4L0K8Ei2YtnhPysAJnsI7nyxSJxKj4ADeKX0OLjC4ntRkwpLOoS3rwA==}
 
-  '@subf/oxlint-plugin@0.4.0':
-    resolution: {integrity: sha512-+pTsZBeey7RR/ROrF6gJkGSYq3RdD2qActZFwfwiWgnEIDDwpgmUVIJhzJoiGV+1+esLIrkCC/U6uqQaOqP39A==}
+  '@subf/oxlint-plugin@0.4.1':
+    resolution: {integrity: sha512-XVahEKTxnY7k2A71pSspJor534VGcyE3n1tO7qOsQc68JfsLac72PWWEc+dbqe4/yA7SOwp6aRhy2lEO/rEjRg==}
 
   '@tsrs/darwin-arm64@0.25.0-ts7.1.0-beta':
     resolution: {integrity: sha512-+pYoQ+AqpdUolO4kJBQlQmwxJOoc5INuusw/2AZnR4frfnyVGza+gEn0br8Z0LOk7nklQuILuMKH93BU3hpHvA==}
@@ -680,9 +680,9 @@ packages:
     resolution: {integrity: sha512-AnfC1ATldl49/cvZdLPDjBfrRNwbDO05aibiOtzQu3qtlbJtomNLhF30HEtn/7iBz50dlMECqATo3fG0LrdEgw==}
     engines: {node: '>=14'}
 
-  entities@6.0.1:
-    resolution: {integrity: sha512-aN97NXWF6AWBTahfVOIrB/NShkzi5H7F9r1s9mD3cDj4Ko5f2qhhVoYMibXF7GlLveb/D2ioWay8lxI97Ven3g==}
-    engines: {node: '>=0.12'}
+  entities@9.0.0:
+    resolution: {integrity: sha512-oJFNDJg3kTPwAD1cNn2+WmUq4wFoo09npc3Ydf1D7ED4smRiWrsKnaLxykrTWgyGEcusc87P5dxlAleol9kpkg==}
+    engines: {node: '>=20.19.0'}
 
   fdir@6.5.0:
     resolution: {integrity: sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==}
@@ -747,8 +747,8 @@ packages:
   package-manager-detector@1.9.0:
     resolution: {integrity: sha512-zAMfbta9nPA8AKkA4WdmNAT8R8s6Dk0/xwPsqNnRidMFcLo1YkLuPDTgs2f64XdzS8vbLNnoJ+uUIkgbz7oRHA==}
 
-  parse5@7.3.0:
-    resolution: {integrity: sha512-IInvU7fabl34qmi9gY8XOVxhYyMyuH2xUNpb2q8/Y+7552KlejkRvqvD19nMoUW/uQGGbqNpA6Tufu5FL5BZgw==}
+  parse5@8.1.1:
+    resolution: {integrity: sha512-EcR/6WDcU7b2N3vQSxKALCk9lXGtUMQxXio008OEMBE0kavu/7JLfBEeFPzi43nMqVDSbEn3QCK+BMCc9zO//w==}
 
   picomatch@4.0.7:
     resolution: {integrity: sha512-qcJu88Q2IWqJsDD529JKMdwGm/dvInW4HvQnRwiH9JtihJvzGOscDtHE3x1pBKeUOTysQ8kVmLnJ2kJu7yhcGA==}
@@ -1078,9 +1078,9 @@ snapshots:
 
   '@rolldown/pluginutils@1.1.1': {}
 
-  '@subf/oxlint-plugin@0.4.0':
+  '@subf/oxlint-plugin@0.4.1':
     dependencies:
-      parse5: 7.3.0
+      parse5: 8.1.1
       validate-html-nesting: 1.2.4
 
   '@tsrs/darwin-arm64@0.25.0-ts7.1.0-beta':
@@ -1156,7 +1156,7 @@ snapshots:
 
   empathic@2.1.0: {}
 
-  entities@6.0.1: {}
+  entities@9.0.0: {}
 
   fdir@6.5.0(picomatch@4.0.7):
     optionalDependencies:
@@ -1224,9 +1224,9 @@ snapshots:
 
   package-manager-detector@1.9.0: {}
 
-  parse5@7.3.0:
+  parse5@8.1.1:
     dependencies:
-      entities: 6.0.1
+      entities: 9.0.0
 
   picomatch@4.0.7: {}
 
