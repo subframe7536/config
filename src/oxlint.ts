@@ -136,7 +136,7 @@ export const baseRules: OxlintConfig = {
     'no-class-assign': 'error',
     'no-compare-neg-zero': 'error',
     'no-cond-assign': ['error', 'except-parens'],
-    'no-console': 'error',
+    'no-console': 'warn',
     'no-const-assign': 'error',
     'no-control-regex': 'error',
     'no-debugger': 'error',
@@ -543,6 +543,7 @@ export const typeAware: OxlintConfig = {
   rules: {
     'typescript/await-thenable': ['error', { allowMixedPromiseArrays: true }],
     'typescript/no-array-delete': 'error',
+    'typescript/no-deprecated': 'warn',
     'typescript/no-duplicate-type-constituents': 'error',
     'typescript/no-floating-promises': 'error',
     'typescript/no-for-in-array': 'error',
