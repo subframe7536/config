@@ -1,3 +1,4 @@
+// oxlint-disable no-console
 import { createConfigs } from './utils/config-files'
 import { updateProjectPackage } from './utils/package-json'
 import { getRegistry } from './utils/registry'

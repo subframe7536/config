@@ -169,9 +169,6 @@ importers:
       '@subf/oxlint-plugin':
         specifier: ^0.4.0
         version: 0.4.0
-      defu:
-        specifier: ^6.1.7
-        version: 6.1.7
     devDependencies:
       '@types/node':
         specifier: ^24

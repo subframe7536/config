@@ -1,4 +1,3 @@
-import { defu } from 'defu'
 import type { OxfmtConfig } from 'oxfmt'
 
 export const CONFIG: OxfmtConfig = {
@@ -21,6 +20,19 @@ export default CONFIG
 
 export type { OxfmtConfig }
 
-export function subfFmt(config?: OxfmtConfig): OxfmtConfig {
-  return defu(CONFIG, config)
+export function subfFmt(config: OxfmtConfig = {}): OxfmtConfig {
+  if (config.sortImports !== undefined && typeof config.sortImports !== 'object') {
+    return { ...CONFIG, ...config }
+  }
+  const base = typeof CONFIG.sortImports === 'object' ? CONFIG.sortImports : {}
+  const override = config.sortImports ?? {}
+  return {
+    ...CONFIG,
+    ...config,
+    sortImports: {
+      ...base,
+      ...override,
+      groups: [...(base.groups ?? []), ...(override.groups ?? [])],
+    },
+  }
 }

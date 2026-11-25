@@ -1,7 +1,6 @@
+// oxlint-disable no-console
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
-
-import { createDefu } from 'defu'
 
 import { getCompilerOptions } from './tsconfig'
 import type { TsconfigType } from './tsconfig'
@@ -20,35 +19,38 @@ function mergeConfig(
   generated: Record<string, unknown>,
   overwrite: boolean,
 ): Record<string, unknown> {
-  const merge = createDefu((object, key, value) => {
-    if (overwrite) {
-      if (isRecord(object[key]) && isRecord(value)) {
-        return false
-      }
-      object[key] = value
-      return true
-    }
-    if (Array.isArray(object[key]) && Array.isArray(value)) {
-      object[key] = value
-      return true
-    }
-    return false
-  })
-  const result = overwrite ? merge(generated, existing) : merge(existing, generated)
-  if (!overwrite) {
-    restoreNullValues(result, existing)
-  }
-  return result
+  return overwrite
+    ? mergeObjects(generated, existing, false)
+    : mergeObjects(existing, generated, true)
 }
 
-function restoreNullValues(result: Record<string, unknown>, source: Record<string, unknown>): void {
-  for (const [key, value] of Object.entries(source)) {
-    if (value === null) {
-      result[key] = null
-    } else if (isRecord(value) && isRecord(result[key])) {
-      restoreNullValues(result[key], value)
+/**
+ * Merge `secondary` into `primary`. `primary` wins on conflicts, plain objects
+ * merge recursively, and `secondary` only fills in missing keys.
+ * When `keepPrimaryNull` is true, explicit `null` values in `primary` win too;
+ * otherwise they are skipped and the `secondary` value is kept.
+ */
+function mergeObjects(
+  primary: Record<string, unknown>,
+  secondary: Record<string, unknown>,
+  keepPrimaryNull: boolean,
+): Record<string, unknown> {
+  const result: Record<string, unknown> = { ...secondary }
+  for (const [key, value] of Object.entries(primary)) {
+    if (value === undefined) {
+      continue
     }
+    if (value === null) {
+      if (keepPrimaryNull) {
+        result[key] = null
+      }
+      continue
+    }
+    const current = result[key]
+    result[key] =
+      isRecord(value) && isRecord(current) ? mergeObjects(value, current, keepPrimaryNull) : value
   }
+  return result
 }
 
 function getTsconfigContent(

@@ -4,7 +4,6 @@ import {
   solidV2Config,
   solidV2StrictConfig,
 } from '@subf/oxlint-plugin/config'
-import { defu } from 'defu'
 import type { OxlintConfig, OxlintOverride } from 'oxlint'
 
 export {
@@ -650,6 +649,7 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
     solid: enableSolid,
     typeAware: enableTypeAware,
     overrides,
+    extends: userExtends,
     ...oxlint
   } = options
   const ovr: Array<OxlintOverride> = []
@@ -703,12 +703,26 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
     ovr.push(...overrides)
   }
 
-  return defu(
-    oxlint,
-    solidExtra,
-    enableTypeAware ? { options: typeAware.options, rules: typeAware.rules } : {},
-    baseConfig,
-    baseRules,
-    { overrides: ovr },
-  )
+  // `env` and `globals` are not merged from `extends` configs, so they are
+  // merged manually at the top level. Everything else (`rules`, `plugins`,
+  // `categories`, `ignorePatterns`, `overrides`, ...) is left to `extends`.
+  return {
+    ...oxlint,
+    env: { ...baseConfig.env, ...oxlint.env },
+    globals: { ...baseConfig.globals, ...oxlint.globals },
+    options: {
+      ...baseConfig.options,
+      ...(enableTypeAware ? typeAware.options : {}),
+      ...oxlint.options,
+    },
+    settings: { ...solidExtra.settings, ...oxlint.settings },
+    extends: [
+      baseConfig,
+      baseRules,
+      ...(enableTypeAware ? [{ options: typeAware.options, rules: typeAware.rules }] : []),
+      ...(solidExtra.settings ? [solidExtra] : []),
+      ...(userExtends ?? []),
+    ],
+    overrides: ovr,
+  }
 }

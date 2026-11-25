@@ -1,9 +1,14 @@
+// oxlint-disable no-console
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 
 import { getLatestVersion } from './registry'
 
-type PackageJson = Record<string, unknown>
+interface PackageJson {
+  devDependencies?: Record<string, string>
+  dependencies?: Record<string, string>
+  [key: string]: unknown
+}
 
 function sortObjectKeys(obj: Record<string, string>): Record<string, string> {
   return Object.fromEntries(Object.entries(obj).sort(([a], [b]) => a.localeCompare(b)))
