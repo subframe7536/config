@@ -22,46 +22,6 @@ subf --type web  # SolidJS apps
 
 When `tsconfig.json` already exists, missing settings are added while existing settings are preserved. Use `--force` to overwrite generated settings. Legacy `@subf/config` entries in `extends` are removed automatically.
 
-### `tsdown`
-
-Helpers to create `tsdown` build configs.
-
-Example: use `lib()` in your `tsdown.config.ts`:
-
-```ts
-import { lib } from '@subf/config/tsdown'
-import { defineConfig } from 'tsdown'
-
-export default lib({
-  entry: 'shallow',
-  excludeDeps: ['oxlint', 'oxfmt', 'tsdown'],
-  overrides: {
-    exports: {
-      customExports(exports) {
-        exports['./custom'] = './you-custom-file.js'
-        return exports
-      },
-    },
-  },
-})
-```
-
-For Node builds use `nodeLib()`:
-
-```ts
-import { nodeLib } from '@subf/config/tsdown'
-export default nodeLib({ entry: 'src/index.ts' })
-```
-
-For Solid builds (requires `vite-plugin-solid`) use `solidLib()`:
-
-```ts
-import { solidLib } from '@subf/config/tsdown'
-import { defineConfig } from 'tsdown'
-
-export default solidLib({ entry: 'src/index.tsx' })
-```
-
 ### `oxfmt`
 
 In `oxfmt.config.ts`:
