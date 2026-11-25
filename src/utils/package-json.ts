@@ -1,10 +1,9 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 
 import { getLatestVersion } from './registry'
 
-type PackageJson = Record<string, any>
+type PackageJson = Record<string, unknown>
 
 function sortObjectKeys(obj: Record<string, string>): Record<string, string> {
   return Object.fromEntries(Object.entries(obj).sort(([a], [b]) => a.localeCompare(b)))
@@ -37,7 +36,7 @@ function ensureDevDependency(
 
 function getSelfVersionRange(): string {
   try {
-    const moduleDirectory = path.dirname(fileURLToPath(import.meta.url))
+    const moduleDirectory = import.meta.dirname
     const packagePath = [
       path.resolve(moduleDirectory, '..', 'package.json'),
       path.resolve(moduleDirectory, '..', '..', 'package.json'),

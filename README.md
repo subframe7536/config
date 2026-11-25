@@ -29,8 +29,8 @@ Helpers to create `tsdown` build configs.
 Example: use `lib()` in your `tsdown.config.ts`:
 
 ```ts
-import { defineConfig } from 'tsdown'
 import { lib } from '@subf/config/tsdown'
+import { defineConfig } from 'tsdown'
 
 export default lib({
   entry: 'shallow',
@@ -56,8 +56,8 @@ export default nodeLib({ entry: 'src/index.ts' })
 For Solid builds (requires `vite-plugin-solid`) use `solidLib()`:
 
 ```ts
-import { defineConfig } from 'tsdown'
 import { solidLib } from '@subf/config/tsdown'
+import { defineConfig } from 'tsdown'
 
 export default solidLib({ entry: 'src/index.tsx' })
 ```
@@ -95,8 +95,8 @@ export default CONFIG
 or use `defineConfig()` with `extend` if you want to extend it:
 
 ```ts
-import { defineConfig } from 'oxlint'
 import { CONFIG } from '@subf/config/oxlint'
+import { defineConfig } from 'oxlint'
 
 export default defineConfig({
   extend: [CONFIG],

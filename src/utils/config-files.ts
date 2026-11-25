@@ -66,7 +66,9 @@ function getTsconfigContent(
     existing = JSON.parse(readFileSync(fullPath, 'utf8'))
   } catch (error) {
     if (!force) {
-      throw new Error(`Failed to parse ${path.basename(fullPath)}: ${String(error)}`)
+      throw new Error(`Failed to parse ${path.basename(fullPath)}: ${String(error)}`, {
+        cause: error,
+      })
     }
     return `${JSON.stringify(generated, null, 2)}\n`
   }
@@ -96,7 +98,7 @@ export function createConfigs({
   force: boolean
   type: TsconfigType
 }): void {
-  const files: ConfigFile[] = [
+  const files: Array<ConfigFile> = [
     {
       name: 'oxfmt.config.ts',
       content: "import { subfFmt } from '@subf/config/oxfmt'\n\nexport default subfFmt()\n",
@@ -107,7 +109,7 @@ export function createConfigs({
     },
   ]
 
-  const created: string[] = []
+  const created: Array<string> = []
   for (const file of files) {
     const fullPath = path.join(cwd, file.name)
     if (existsSync(fullPath)) {

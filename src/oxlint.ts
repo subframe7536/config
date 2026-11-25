@@ -607,7 +607,7 @@ export const markdownOverrideConfig: OxlintOverride = {
   },
 }
 
-export const overrides: OxlintOverride[] = [ts, vitest, markdownOverrideConfig]
+export const overrides: Array<OxlintOverride> = [ts, vitest, markdownOverrideConfig]
 
 export const CONFIG: OxlintConfig = {
   ...baseConfig,
@@ -652,7 +652,7 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
     overrides,
     ...oxlint
   } = options
-  const ovr: OxlintOverride[] = []
+  const ovr: Array<OxlintOverride> = []
   let solidExtra: OxlintConfig = {}
 
   if (lib) {

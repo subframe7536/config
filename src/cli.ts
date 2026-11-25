@@ -4,7 +4,7 @@ import { getRegistry } from './utils/registry'
 import { TSCONFIG_TYPE } from './utils/tsconfig'
 import type { TsconfigType } from './utils/tsconfig'
 
-export function parseType(argv: readonly string[]): TsconfigType {
+export function parseType(argv: ReadonlyArray<string>): TsconfigType {
   const index = argv.findIndex((arg) => arg === '--type' || arg.startsWith('--type='))
   if (index < 0) {
     return 'lib'
@@ -17,7 +17,7 @@ export function parseType(argv: readonly string[]): TsconfigType {
   return value as TsconfigType
 }
 
-export async function main(argv: readonly string[] = process.argv.slice(2)): Promise<number> {
+export async function main(argv: ReadonlyArray<string> = process.argv.slice(2)): Promise<number> {
   const args = new Set(argv)
   const force = args.has('--force') || args.has('-f')
   const help = args.has('--help') || args.has('-h')

@@ -63,9 +63,7 @@
     "typescript": "^7.0.2"
   },
   "peerDependencies": {
-    "defu": "^6.1.7",
-    "oxfmt": "^0",
-    "oxlint": "^1"
+    "defu": "^6.1.7"
   },
   "packageManager": "pnpm@12.6.0"
 }
