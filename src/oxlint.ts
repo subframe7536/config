@@ -506,13 +506,7 @@ export const ts: OxlintOverride = {
 }
 
 export const vitest: OxlintOverride = {
-  files: [
-    '**/__tests__/**/*.?{js,ts,jsx,tsx}',
-    '**/*.spec.?{js,ts,jsx,tsx}',
-    '**/*.test.?{js,ts,jsx,tsx}',
-    '**/*.bench.?{js,ts,jsx,tsx}',
-    '**/*.benchmark.?{js,ts,jsx,tsx}',
-  ],
+  files: ['**/__tests__/**/*.{js,ts,jsx,tsx}', '**/*.{spec,test,bench,benchmark}.{js,ts,jsx,tsx}'],
   plugins: ['vitest'],
   rules: {
     'vitest/consistent-test-it': [
@@ -594,7 +588,7 @@ export const typeAware: OxlintConfig = {
 }
 
 export const markdownOverrideConfig: OxlintOverride = {
-  files: ['**/*.md/**/*.?{js,ts,jsx,tsx}'],
+  files: ['**/*.md/**/*.{js,ts,jsx,tsx}'],
   rules: {
     'no-alert': 'off',
     'no-labels': 'off',
