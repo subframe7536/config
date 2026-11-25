@@ -1,8 +1,18 @@
-import { FILES_TS_TSX, solidConfig } from '@subf/oxlint-plugin/config'
+import {
+  FILES_TS_TSX,
+  solidConfig,
+  solidV2Config,
+  solidV2StrictConfig,
+} from '@subf/oxlint-plugin/config'
 import { defu } from 'defu'
 import type { OxlintConfig, OxlintOverride } from 'oxlint'
 
-export { FILES_TS_TSX, solidConfig as solid } from '@subf/oxlint-plugin/config'
+export {
+  FILES_TS_TSX,
+  solidConfig as solid,
+  solidV2Config as solidV2,
+  solidV2StrictConfig as solidV2Strict,
+} from '@subf/oxlint-plugin/config'
 
 export const baseConfig: OxlintConfig = {
   env: {
@@ -617,12 +627,17 @@ export const unocss: OxlintOverride = {
   },
 }
 
+export type SolidPreset = 'v1' | 'v2' | 'v2strict'
+
 export interface SubfOptions extends OxlintConfig {
   /**
    * Used for lib, force to explicit function return type
    */
   lib?: boolean
-  solid?: boolean
+  /**
+   * SolidJS lint preset. Passing `true` defaults to `'v2strict'`.
+   */
+  solid?: boolean | SolidPreset
   typeAware?: boolean
   unocss?: boolean
 }
@@ -637,6 +652,7 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
     ...oxlint
   } = options
   const ovr: OxlintOverride[] = []
+  let solidExtra: OxlintConfig = {}
 
   if (lib) {
     ovr.push({
@@ -664,7 +680,18 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
   }
 
   if (enableSolid) {
-    ovr.push(solidConfig)
+    const solidPreset: SolidPreset = enableSolid === true ? 'v2strict' : enableSolid
+    if (solidPreset === 'v1') {
+      ovr.push(solidConfig)
+    } else {
+      const preset = solidPreset === 'v2' ? solidV2Config : solidV2StrictConfig
+      if (preset.overrides) {
+        ovr.push(...preset.overrides)
+      }
+      if (preset.settings) {
+        solidExtra = { settings: preset.settings }
+      }
+    }
   }
 
   if (enableTypeAware && typeAware.overrides) {
@@ -677,6 +704,7 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
 
   return defu(
     oxlint,
+    solidExtra,
     enableTypeAware ? { options: typeAware.options, rules: typeAware.rules } : {},
     baseConfig,
     baseRules,
