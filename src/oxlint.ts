@@ -610,14 +610,43 @@ export default CONFIG
 
 export type { OxlintConfig, OxlintOverride }
 
-export const unocss: OxlintOverride = {
-  files: FILES_TS_TSX,
-  jsPlugins: [{ name: 'uno', specifier: '@subf/unocss/oxlint-plugin' }],
-  rules: {
-    'uno/order': ['warn', { unoFunctions: ['cn', 'cva'] }],
-    'uno/blocklist': 'error',
-  },
+export type UnoCSSOption = {
+  /**
+   * @default true
+   */
+  enable?: boolean
+  order?: {
+    /**
+     * Package name
+     * @default '@subf/unocss/oxlint-plugin'
+     */
+    package?: string
+    /**
+     * @default ['cn', 'cva']
+     */
+    unoFunctions?: Array<string>
+    unoVariables?: Array<string>
+  }
 }
+
+function getUnocssOverride(option: UnoCSSOption['order'] = {}): OxlintOverride {
+  return {
+    files: FILES_TS_TSX,
+    jsPlugins: [{ name: 'uno', specifier: option.package || '@subf/unocss/oxlint-plugin' }],
+    rules: {
+      'uno/order': [
+        'warn',
+        {
+          unoFunctions: option?.unoFunctions || ['cn', 'cva'],
+          unoVariables: option?.unoVariables,
+        },
+      ],
+      'uno/blocklist': 'error',
+    },
+  }
+}
+
+export const unocss: OxlintOverride = getUnocssOverride()
 
 export type SolidPreset = 'v1' | 'v2' | 'v2strict'
 
@@ -631,13 +660,13 @@ export interface SubfOptions extends OxlintConfig {
    */
   solid?: boolean | SolidPreset
   typeAware?: boolean
-  unocss?: boolean
+  unocss?: boolean | UnoCSSOption
 }
 
 export function subfLint(options: SubfOptions = {}): OxlintConfig {
   const {
     lib,
-    unocss: enableUnocss,
+    unocss: unocssConfig,
     solid: enableSolid,
     typeAware: enableTypeAware,
     overrides,
@@ -668,8 +697,10 @@ export function subfLint(options: SubfOptions = {}): OxlintConfig {
 
   ovr.push(vitest, markdownOverrideConfig)
 
-  if (enableUnocss) {
+  if (unocssConfig === true) {
     ovr.push(unocss)
+  } else if (typeof unocssConfig === 'object' && unocssConfig.enable !== false) {
+    ovr.push(getUnocssOverride(unocssConfig.order))
   }
 
   if (enableSolid) {
