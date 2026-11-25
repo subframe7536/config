@@ -90,7 +90,6 @@ export const baseConfig: OxlintConfig = {
     '**/*.min.*',
     '**/LICENSE*',
     '**/__snapshots__',
-    '**/auto-import?(s).d.ts',
     '**/components.d.ts',
     '_fixtures',
   ],
