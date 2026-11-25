@@ -121,9 +121,10 @@ export async function updateProjectPackage({
     }
   }
 
-  const missingTools = ['oxfmt', 'oxlint', 'typescript'].filter(
-    (name) => !hasDependency(projectPackage, name),
-  )
+  const missingTools = ['oxfmt', 'oxlint'].filter((name) => !hasDependency(projectPackage, name))
+  if (!hasDependency(projectPackage, 'typescript') && !hasDependency(projectPackage, 'tsrs')) {
+    missingTools.push('tsrs/typescript')
+  }
   if (missingTools.length > 0) {
     console.log(`Hint: Install ${missingTools.join(' and ')} to use the generated configs.`)
   }
