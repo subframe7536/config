@@ -100,6 +100,7 @@ export const baseRules: OxlintConfig = {
   jsPlugins: [{ name: 'subf', specifier: '@subf/oxlint-plugin' }],
   categories: {
     correctness: 'error',
+    perf: 'warn',
   },
   rules: {
     'subf/method-signature-style': 'error',
@@ -508,6 +509,7 @@ export const vitest: OxlintOverride = {
   files: ['**/__tests__/**/*.{js,ts,jsx,tsx}', '**/*.{spec,test,bench,benchmark}.{js,ts,jsx,tsx}'],
   plugins: ['vitest'],
   rules: {
+    'unicorn/consistent-function-scoping': 'off',
     'vitest/consistent-test-it': [
       'error',
       {
@@ -521,6 +523,7 @@ export const vitest: OxlintOverride = {
     'vitest/prefer-lowercase-title': 'error',
     'vitest/prefer-called-exactly-once-with': 'warn',
     'vitest/require-awaited-expect-poll': 'error',
+    'vitest/valid-expect': ['error', { maxArgs: 2 }],
     'no-unused-expressions': 'off',
     'typescript/no-explicit-any': 'off',
     'typescript/no-non-null-assertion': 'off',
