@@ -506,9 +506,13 @@ export const ts: OxlintOverride = {
 }
 
 export const vitest: OxlintOverride = {
-  files: ['**/__tests__/**/*.{js,ts,jsx,tsx}', '**/*.{spec,test,bench,benchmark}.{js,ts,jsx,tsx}'],
+  files: [
+    '**/__tests__/**/*.{js,ts,jsx,tsx}',
+    '**/*.{spec,test,bench,benchmark,e2e}.{js,ts,jsx,tsx}',
+  ],
   plugins: ['vitest'],
   rules: {
+    'eslint/no-await-in-loop': 'off',
     'unicorn/consistent-function-scoping': 'off',
     'vitest/consistent-test-it': [
       'error',
