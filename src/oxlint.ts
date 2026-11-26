@@ -6,12 +6,17 @@ import {
 } from '@subf/oxlint-plugin/config'
 import type { OxlintConfig, OxlintOverride } from 'oxlint'
 
+import { composeOxlintConfig } from './utils/oxlint-compose'
+import type { OxlintFlatConfigInput, OxlintFlatItem } from './utils/oxlint-compose'
+
 export {
   FILES_TS_TSX,
   solidConfig as solid,
   solidV2Config as solidV2,
   solidV2StrictConfig as solidV2Strict,
 } from '@subf/oxlint-plugin/config'
+export { composeOxlintConfig } from './utils/oxlint-compose'
+export type { OxlintFlatConfigInput, OxlintFlatItem } from './utils/oxlint-compose'
 
 export const baseConfig: OxlintConfig = {
   env: {
@@ -505,6 +510,20 @@ export const ts: OxlintOverride = {
   },
 }
 
+export const lib: OxlintOverride = {
+  files: FILES_TS_TSX,
+  rules: {
+    'typescript/explicit-function-return-type': [
+      'error',
+      {
+        allowExpressions: true,
+        allowTypedFunctionExpressions: true,
+        allowIIFEs: true,
+      },
+    ],
+  },
+}
+
 export const vitest: OxlintOverride = {
   files: [
     '**/__tests__/**/*.{js,ts,jsx,tsx}',
@@ -657,7 +676,7 @@ export const unocss: OxlintOverride = getUnocssOverride()
 
 export type SolidPreset = 'v1' | 'v2' | 'v2strict'
 
-export interface SubfOptions extends OxlintConfig {
+export interface SubfOptions extends OxlintFlatItem {
   /**
    * Used for lib, force to explicit function return type
    */
@@ -670,96 +689,52 @@ export interface SubfOptions extends OxlintConfig {
   unocss?: boolean | UnoCSSOption
 }
 
-export function subfLint(options: SubfOptions = {}): OxlintConfig {
+function resolveUnocss(option: boolean | UnoCSSOption | undefined): OxlintOverride | false {
+  if (option === true) {
+    return unocss
+  }
+  if (typeof option === 'object' && option.enable !== false) {
+    return getUnocssOverride(option.order)
+  }
+  return false
+}
+
+function resolveSolid(
+  option: boolean | SolidPreset | undefined,
+): OxlintConfig | OxlintOverride | false {
+  if (!option) {
+    return false
+  }
+  const preset: SolidPreset = option === true ? 'v2strict' : option
+  if (preset === 'v1') {
+    return solidConfig
+  }
+  return preset === 'v2' ? solidV2Config : solidV2StrictConfig
+}
+
+export function subfLint(
+  options: SubfOptions = {},
+  ...userConfigs: Array<OxlintFlatConfigInput>
+): OxlintConfig {
   const {
-    lib,
+    lib: enableLib,
     unocss: unocssConfig,
     solid: enableSolid,
     typeAware: enableTypeAware,
-    overrides,
-    extends: userExtends,
     ...oxlint
   } = options
-  const ovr: Array<OxlintOverride> = []
-  let solidSettings: OxlintConfig['settings']
 
-  if (lib) {
-    ovr.push({
-      ...ts,
-      rules: {
-        ...ts.rules,
-        'typescript/explicit-function-return-type': [
-          'error',
-          {
-            allowExpressions: true,
-            allowTypedFunctionExpressions: true,
-            allowIIFEs: true,
-          },
-        ],
-      },
-    })
-  } else {
-    ovr.push(ts)
-  }
-
-  ovr.push(vitest, markdownOverrideConfig)
-
-  if (unocssConfig === true) {
-    ovr.push(unocss)
-  } else if (typeof unocssConfig === 'object' && unocssConfig.enable !== false) {
-    ovr.push(getUnocssOverride(unocssConfig.order))
-  }
-
-  if (enableSolid) {
-    const solidPreset: SolidPreset = enableSolid === true ? 'v2strict' : enableSolid
-    if (solidPreset === 'v1') {
-      ovr.push(solidConfig)
-    } else {
-      const preset = solidPreset === 'v2' ? solidV2Config : solidV2StrictConfig
-      if (preset.overrides) {
-        ovr.push(...preset.overrides)
-      }
-      solidSettings = preset.settings
-    }
-  }
-
-  if (enableTypeAware && typeAware.overrides) {
-    ovr.push(...typeAware.overrides)
-  }
-
-  if (overrides) {
-    ovr.push(...overrides)
-  }
-
-  // `env`, `globals`, `settings` and `ignorePatterns` are dropped by `extends`,
-  // and a `plugins` array replaces the ones in `extends` configs instead of
-  // merging, so they are merged manually. `rules`, `categories`, `jsPlugins`,
-  // `options` and `overrides` are left to `extends`.
-  return {
-    ...oxlint,
-    env: { ...baseConfig.env, ...oxlint.env },
-    globals: { ...baseConfig.globals, ...oxlint.globals },
-    settings: { ...solidSettings, ...oxlint.settings },
-    options: {
-      ...baseConfig.options,
-      ...(enableTypeAware ? typeAware.options : {}),
-      ...oxlint.options,
-    },
-    plugins: [
-      ...(baseRules.plugins ?? []),
-      ...(userExtends ?? []).flatMap((config) => config.plugins ?? []),
-      ...(oxlint.plugins ?? []),
-    ],
-    ignorePatterns: [
-      ...(baseConfig.ignorePatterns ?? []),
-      ...(userExtends ?? []).flatMap((config) => config.ignorePatterns ?? []),
-      ...(oxlint.ignorePatterns ?? []),
-    ],
-    extends: [
-      baseRules,
-      ...(enableTypeAware ? [{ rules: typeAware.rules }] : []),
-      ...(userExtends ?? []),
-    ],
-    overrides: ovr,
-  }
+  return composeOxlintConfig(
+    baseConfig,
+    baseRules,
+    ts,
+    enableLib && lib,
+    vitest,
+    markdownOverrideConfig,
+    resolveUnocss(unocssConfig),
+    resolveSolid(enableSolid),
+    enableTypeAware && typeAware,
+    oxlint,
+    userConfigs,
+  )
 }
