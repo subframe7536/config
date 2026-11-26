@@ -6,8 +6,8 @@ import {
 } from '@subf/oxlint-plugin/config'
 import type { OxlintConfig, OxlintOverride } from 'oxlint'
 
-import { composeOxlintConfig } from './utils/oxlint-compose'
-import type { OxlintFlatConfigInput, OxlintFlatItem } from './utils/oxlint-compose'
+import { composeOxlintConfig } from './utils/oxlint-compose.ts'
+import type { OxlintFlatConfigInput, OxlintFlatItem } from './utils/oxlint-compose.ts'
 
 export {
   FILES_TS_TSX,
@@ -15,8 +15,8 @@ export {
   solidV2Config as solidV2,
   solidV2StrictConfig as solidV2Strict,
 } from '@subf/oxlint-plugin/config'
-export { composeOxlintConfig } from './utils/oxlint-compose'
-export type { OxlintFlatConfigInput, OxlintFlatItem } from './utils/oxlint-compose'
+export { composeOxlintConfig } from './utils/oxlint-compose.ts'
+export type { OxlintFlatConfigInput, OxlintFlatItem } from './utils/oxlint-compose.ts'
 
 export const baseConfig: OxlintConfig = {
   env: {
