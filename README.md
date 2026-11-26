@@ -52,32 +52,45 @@ import { CONFIG } from '@subf/config/oxlint'
 export default CONFIG
 ```
 
-or use `defineConfig()` with `extend` if you want to extend it:
+or use `defineConfig()` with `extends` if you want to extend it:
 
 ```ts
 import { CONFIG } from '@subf/config/oxlint'
 import { defineConfig } from 'oxlint'
 
 export default defineConfig({
-  extend: [CONFIG],
+  extends: [CONFIG],
   // your custom config here
 })
 ```
 
 #### Helper
 
-Use `subf()` helper to create a `oxlint` config with opinionated presets for lib, solid, unocss, etc.
+Use `subfLint()` helper to create an `oxlint` config with opinionated presets for `lib`, `solid`, `unocss`, `typeAware`, etc. You can also append additional ESLint-style flat config items (objects, nested arrays, or conditional expressions); later items always take precedence over earlier presets.
 
 ```ts
-import { subf } from '@subf/config/oxlint'
+import { subfLint } from '@subf/config/oxlint'
 
-export default subf({
-  lib: true,
-  solid: true,
-  unocss: true,
-  // your custom oxlint config here
-})
+export default subfLint(
+  {
+    lib: true,
+    solid: true,
+    unocss: true,
+    // top-level overrides apply after built-in presets
+  },
+  {
+    files: ['scripts/**'],
+    rules: {
+      'no-console': 'off',
+    },
+  },
+  {
+    ignores: ['**/generated/**'],
+  },
+)
 ```
+
+For custom composition from exported presets, you can also use `composeOxlintConfig(...)` directly.
 
 ## CLI
 
